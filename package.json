@@ -1,0 +1,51 @@
+{
+  "name": "gulp-task-control",
+  "version": "1.0.0",
+  "description": "my first grunt task updated",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rmcnaughGitHub/GULP-TASK-CONTROL.git"
+  },
+  "keywords": [
+    "grunt",
+    "live",
+    "re-load",
+    "sass"
+  ],
+  "author": "Raymond R-Mcnaught",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rmcnaughGitHub/GULP-TASK-CONTROL/issues"
+  },
+  "homepage": "https://github.com/rmcnaughGitHub/GULP-TASK-CONTROL#readme",
+  "devDependencies": {
+    "browser-sync": "^2.18.5",
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-cache": "^0.4.5",
+    "gulp-concat": "^2.6.1",
+    "gulp-imagemin": "^3.1.1",
+    "gulp-jshint": "^2.0.4",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.3.2",
+    "gulp-sourcemaps": "^1.9.1",
+    "gulp-uglify": "^1.5.4",
+    "gulp-util": "^3.0.7",
+    "gulp-wrapper": "^1.0.0",
+    "gulp-zip": "^3.2.0",
+    "imagemin-pngquant": "^5.0.0",
+    "jshint": "^2.9.4",
+    "jshint-stylish": "^2.2.1",
+    "run-sequence": "^1.2.2"
+  },
+  "dependencies": {
+    "imagemin-pngquant": "^5.0.0"
+  }
+}
