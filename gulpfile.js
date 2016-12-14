@@ -12,7 +12,7 @@ var gulp = require('gulp'),
 	pngquant = require('imagemin-pngquant'),//pngquant enabled saves extra bytes on PNG files
 	cache = require('gulp-cache'),
 	del = require('del'),
-	runSequence = require('run-sequence'),
+	//runSequence = require('run-sequence'),//this is a hack
 	concat = require('gulp-concat'),//cocatenate files
 	/* The gulp task system provides a gulp task 
 	with a callback, which can signal successful
@@ -21,6 +21,7 @@ var gulp = require('gulp'),
 	argument). Fortunately, this is the exact same format pump uses!*/
 	pump = require('pump'),
 	zip = require('gulp-zip'),
+	notify = require('gulp-notify'),//gulp plugin to send messages based on Vinyl Files or Errors to Mac OS X, Linux or Windows using the node-notifier module. Fallbacks to Growl or simply logging
 
 	//NAME ZIP FILE AFTER MAIN DIRECTORY
 	dirParts = __dirname.split('/'),
@@ -35,7 +36,9 @@ var paths = {
 		html: 'app/*.html',
 		css: 'app/css/*.css',
 		js: 'js/*.js',
-		dist: 'dist'
+		dist: 'dist',
+		main: './',
+		folder: './dist'
 	}, 
 	html: {
 		src: 'app/index.html',
@@ -153,10 +156,14 @@ gulp.task('clean:dist', function() {
 
 //ZIP FILES - FOLDER
 gulp.task('zip-the-files', function() {
-  return gulp.src(paths.base.dist  + '/*')
-  .pipe(zip(zipName + '.zip'))
-  .pipe(gulp.dest('./'));
-  //console.log('zip file ',zipName);
+	return gulp.src(paths.base.main + '/*')//(paths.base.dist  + '/*')
+		.pipe(zip(zipName + '.zip'))
+		.pipe(gulp.dest('./'))
+		.on('error', notify.onError({
+		        title: 'Zip File Failed', 
+		        message: 'One or more tests failed, see cli for details.'
+		}));
+	console.log('zip file ', zipName);
 });
 
 
@@ -171,12 +178,11 @@ gulp.task('watch', function() {
 
 
 //DEFAULT TASKS
-gulp.task('default', function() { 
-	runSequence('watch',['sass', 'browser-sync', 'JS']) 
-});
+gulp.task('default',['sass', 'browser-sync', 'JS', 'watch']);
 
 
 //BUILD TASK
-gulp.task('build', function(){
-	runSequence('clean:dist',['sass-build','JS-build', 'copy-html','imageMin', 'zip-the-files'])
-});
+/*gulp.task('build', function(){
+	runSequence(['clean:dist'],'sass-build','JS-build', 'copy-html','imageMin', 'zip-the-files')
+});*/
+gulp.task('build', ['clean:dist','sass-build','JS-build','copy-html','imageMin', 'zip-the-files']);

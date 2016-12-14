@@ -17,7 +17,7 @@ https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md
 
 
 
-<br>Main Modules Used: -  npm install --save-dev gulp-util  gulp-sass  gulp-minify-css gulp-rename  gulp-autoprefixer gulp-util gulp-minify-css gulp-rename del gulp-uglify gulp-concat jshint gulp-jshint gulp-wrapper gulp-sourcemaps jshint-stylish gulp-plumber gulp-cache gulp-imagemin imagemin-pngquant run-sequence gulp-zip browser-sync pump
+<br>Main Modules Used: -  npm install --save-dev gulp-util  gulp-sass  gulp-minify-css gulp-rename  gulp-autoprefixer gulp-util gulp-minify-css gulp-rename del gulp-uglify gulp-concat jshint gulp-jshint gulp-wrapper gulp-sourcemaps jshint-stylish gulp-plumber gulp-cache gulp-imagemin imagemin-pngquant gulp-zip browser-sync pump gulp-notify
 <br> 
 <br>Uglify: - npm install --save-dev gulp-uglify
 <br>PUMP: - npm install pump
@@ -28,10 +28,12 @@ https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md
 <br>Imagemin: npm install --save-dev gulp-imagemin
 <br>pngquant imagemin - Returns a promise for a buffer: npm install --save imagemin-pngquant
 <br>Clean Task: npm install del --save-dev
-<br>Run Sequence: npm install run-sequence --save-dev
+<br>***Optional This is a Hack*** Run Sequence: npm install run-sequence --save-dev
 <br>Gulp Zip: npm install --save-dev gulp-zip
 <br>Browser Synch:  npm install -g browser-sync
+<br>Gulp Notify: npm install --save-dev gulp-notify
 <br>
+<br>****Note: In the gulfile.js gulp tasks in the "[]"" run first!!!! However they all run simultaneously!!!!****
 <br> 'gulp' to run server and watch
 <br> 'gulp build' to build files in 'dist' folder
 
