@@ -156,13 +156,13 @@ gulp.task('clean:dist', function() {
 
 
 //SPRITE SHEET
-gulp.task('sprite', function(){
+gulp.task('sprite-night', function(){
 	var spriteData = gulp.src(paths.images.sprites)
 		.pipe(spritesmith({
 			/* this whole image path is used
 			in css background declarations */
 			imgName: '../images/spriteSheet.png',
-			cssName:  'sprite.css'
+			cssName:  'spriteSheet.css'
 		}));
 	spriteData.img.pipe(gulp.dest(paths.images.dist));
 	spriteData.css.pipe(gulp.dest(paths.styles.dist));
@@ -188,6 +188,7 @@ gulp.task('watch', function() {
 	gulp.watch(paths.styles.src).on('change', browserSync.reload);//sass
 	gulp.watch(paths.scripts.src).on('change', browserSync.reload);//.js
 	gulp.watch(paths.base.html).on('change', browserSync.reload);//html
+	gulp.watch(paths.images.sprites,['sprite-night']);//imageMin
 	//gulp.watch(paths.images.src,['imageMin']);//imageMin
 });
 
@@ -197,7 +198,7 @@ gulp.task('default',['sass', 'browser-sync', 'JS', 'watch']);
 
 
 //BUILD TASK
-gulp.task('build', ['clean:dist','sass-build','JS-build','copy-html','sprite','imageMin', 'zip-the-files']);
+gulp.task('build', ['clean:dist','sass-build','JS-build','copy-html','sprite-night','imageMin', 'zip-the-files']);
 /*gulp.task('build', function(){
 	runSequence(['clean:dist'],'sass-build','JS-build', 'copy-html','imageMin', 'zip-the-files')
 });*/

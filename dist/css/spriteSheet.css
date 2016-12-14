@@ -16,15 +16,21 @@ To change `display` (e.g. `display: inline-block;`), we suggest using a common C
 // HTML
 <i class="icon icon-home"></i>
 */
-.icon-sprite-one {
+.icon-spongebob {
   background-image: url(../images/spriteSheet.png);
   background-position: 0px 0px;
+  width: 642px;
+  height: 612px;
+}
+.icon-sprite-one {
+  background-image: url(../images/spriteSheet.png);
+  background-position: -642px 0px;
   width: 309px;
   height: 416px;
 }
 .icon-sprite-two {
   background-image: url(../images/spriteSheet.png);
-  background-position: -309px 0px;
+  background-position: 0px -612px;
   width: 256px;
   height: 256px;
 }
