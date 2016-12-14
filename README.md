@@ -33,6 +33,7 @@ https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md
 <br>Browser Synch:  npm install -g browser-sync
 <br>Gulp Notify: npm install --save-dev gulp-notify
 <br>Sprite Management: npm install --save-dev gulp.spritesmith
+<br>Merge File: npm install --save-dev merge-stream
 <br>
 <br>****Note: In the gulfile.js gulp tasks in the "[]"" run first!!!! However they all run simultaneously!!!!****
 <br> 'gulp' to run server and watch

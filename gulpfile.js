@@ -24,6 +24,9 @@ var gulp = require('gulp'),
 	notify = require('gulp-notify'),//gulp plugin to send messages based on Vinyl Files or Errors to Mac OS X, Linux or Windows using the node-notifier module. Fallbacks to Growl or simply logging
 	spritesmith = require('gulp.spritesmith'),//sprite management - https://www.bignerdranch.com/blog/css-sprite-management-with-gulp/
 	//NAME ZIP FILE AFTER MAIN DIRECTORY
+	merge = require('merge-stream'),
+
+
 	dirParts = __dirname.split('/'),
 	zipName = dirParts[dirParts.length - 1];//Then within the "zip-the-files" task definition, replace the hardcoded zip name with: zipName + '.zip'
 
@@ -86,10 +89,35 @@ gulp.task('sass', function() {
 gulp.task('sass-build', function() {  
     gulp.src(paths.styles.src)
         .pipe(sass({includePaths: ['scss'], style: 'expanded' }))
-        .pipe(autoprefixer("last 3 version","safari 5", "ie 8", "ie 9"))
+        //.pipe(autoprefixer("last 3 version","safari 5", "ie 8", "ie 9"))
+        //.pipe(concat('style.css'))
+		//.pipe(minifycss()) //*minify
+		.pipe(gulp.dest(paths.styles.dist));//dist folder
+});
+
+
+//SPRITE SHEET
+gulp.task('sprite-night', function(){
+	var spriteData = gulp.src(paths.images.sprites)
+		.pipe(spritesmith({
+			/* this whole image path is used
+			in css background declarations */
+			imgName: '../images/spriteSheet.png',
+			cssName:  'spriteSheet.css'
+		}));
+	spriteData.img.pipe(gulp.dest(paths.images.dist));
+	spriteData.css.pipe(gulp.dest(paths.styles.dist));
+});
+
+
+//MERGE SASS/CSS FILES
+gulp.task('merge-files', function(){
+	var mergedStream = merge('sass-build','sprite-night')
+		.pipe(autoprefixer("last 3 version","safari 5", "ie 8", "ie 9"))
         .pipe(concat('style.css'))
 		.pipe(minifycss()) //*minify
-		.pipe(gulp.dest(paths.styles.dist));//dist folder
+
+	return mergedStream;
 });
 
 
@@ -155,20 +183,6 @@ gulp.task('clean:dist', function() {
 })
 
 
-//SPRITE SHEET
-gulp.task('sprite-night', function(){
-	var spriteData = gulp.src(paths.images.sprites)
-		.pipe(spritesmith({
-			/* this whole image path is used
-			in css background declarations */
-			imgName: '../images/spriteSheet.png',
-			cssName:  'spriteSheet.css'
-		}));
-	spriteData.img.pipe(gulp.dest(paths.images.dist));
-	spriteData.css.pipe(gulp.dest(paths.styles.dist));
-})
-
-
 //ZIP FILES - FOLDER
 gulp.task('zip-the-files', function() {
 	return gulp.src(paths.base.main + '/*')//(paths.base.dist  + '/*')
@@ -198,7 +212,7 @@ gulp.task('default',['sass', 'browser-sync', 'JS', 'watch']);
 
 
 //BUILD TASK
-gulp.task('build', ['clean:dist','sass-build','JS-build','copy-html','sprite-night','imageMin', 'zip-the-files']);
+gulp.task('build', ['clean:dist','sass-build','JS-build','copy-html','sprite-night','imageMin', 'merge-files', 'zip-the-files']);
 /*gulp.task('build', function(){
 	runSequence(['clean:dist'],'sass-build','JS-build', 'copy-html','imageMin', 'zip-the-files')
 });*/
