@@ -1,3 +1,19 @@
+/*//// 
+
+COMPASS SPRITE CONTROL
+-Note- all sprites in spritesheet must be .pngs
+-Note- @extend adds 'base' style to any other class or id
+
+////*/
+/*.img1 {
+	background: url($sprites, sprite-one);
+	@extend .imgControl;
+}
+
+.img2 {
+	background: url($sprites, sprite-two);
+	@extend .imgControl;
+}*/
 /*VARS*/
 body {
   font-family: Tahoma, Geneva, sans-serif;
@@ -32,7 +48,16 @@ body, html {
   cursor: pointer;
   margin: 0 auto;
   overflow: hidden;
-  position: relative;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-      transform: translateY(-50%); }
+  position: absolute;
+  /*relative*/
+  top: 0;
+  /*50%*/ }
+
+.imgControl {
+  position: absolute;
+  background-size: cover;
+  left: 50px;
+  height: 170px;
+  outline: 1px solid #f00;
+  width: 170px;
+  top: 80px; }

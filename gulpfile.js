@@ -22,7 +22,7 @@ var gulp = require('gulp'),
 	pump = require('pump'),
 	zip = require('gulp-zip'),
 	notify = require('gulp-notify'),//gulp plugin to send messages based on Vinyl Files or Errors to Mac OS X, Linux or Windows using the node-notifier module. Fallbacks to Growl or simply logging
-
+	spritesmith = require('gulp.spritesmith'),//sprite management - https://www.bignerdranch.com/blog/css-sprite-management-with-gulp/
 	//NAME ZIP FILE AFTER MAIN DIRECTORY
 	dirParts = __dirname.split('/'),
 	zipName = dirParts[dirParts.length - 1];//Then within the "zip-the-files" task definition, replace the hardcoded zip name with: zipName + '.zip'
@@ -59,7 +59,8 @@ var paths = {
 	images: {
 		src: 'app/images/*.{jpg,png,gif,jpeg}',
 		main: 'app/images',
-		dist: 'dist/images'
+		dist: 'dist/images',
+		sprites: 'app/images/spriteSheet/*.png'
 	}
 };
 
@@ -154,6 +155,20 @@ gulp.task('clean:dist', function() {
 })
 
 
+//SPRITE SHEET
+gulp.task('sprite', function(){
+	var spriteData = gulp.src(paths.images.sprites)
+		.pipe(spritesmith({
+			/* this whole image path is used
+			in css background declarations */
+			imgName: '../images/spriteSheet.png',
+			cssName:  'sprite.css'
+		}));
+	spriteData.img.pipe(gulp.dest(paths.images.dist));
+	spriteData.css.pipe(gulp.dest(paths.styles.dist));
+})
+
+
 //ZIP FILES - FOLDER
 gulp.task('zip-the-files', function() {
 	return gulp.src(paths.base.main + '/*')//(paths.base.dist  + '/*')
@@ -182,7 +197,7 @@ gulp.task('default',['sass', 'browser-sync', 'JS', 'watch']);
 
 
 //BUILD TASK
+gulp.task('build', ['clean:dist','sass-build','JS-build','copy-html','sprite','imageMin', 'zip-the-files']);
 /*gulp.task('build', function(){
 	runSequence(['clean:dist'],'sass-build','JS-build', 'copy-html','imageMin', 'zip-the-files')
 });*/
-gulp.task('build', ['clean:dist','sass-build','JS-build','copy-html','imageMin', 'zip-the-files']);
