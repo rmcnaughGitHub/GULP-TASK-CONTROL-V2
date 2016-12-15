@@ -120,7 +120,7 @@ gulp.task('sprite-build', function(){
 });
 
 //JAVASCRIPT WATCH {Compress}
-gulp.task('JS', function(){
+gulp.task('JS-watch', function(){
 	pump([
 		gulp.src(paths.scripts.src),
 		gulp.dest(paths.scripts.main),
@@ -205,7 +205,7 @@ gulp.task('watch', function() {
 
 
 //DEFAULT TASKS
-gulp.task('default',['sass', 'browser-sync', 'JS', 'watch']);
+gulp.task('default',['sass','sprite-watch','JS-watch', 'browser-sync', 'watch']);
 
 
 //BUILD TASK
