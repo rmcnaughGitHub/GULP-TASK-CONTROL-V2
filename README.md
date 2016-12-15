@@ -17,7 +17,7 @@ https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md
 
 
 
-<br>Main Modules Used. You can install all with the folowing line: npm install --save-dev gulp-util  gulp-sass  gulp-minify-css gulp-rename  gulp-autoprefixer gulp-util gulp-minify-css gulp-rename del gulp-uglify gulp-concat jshint gulp-jshint gulp-wrapper gulp-sourcemaps jshint-stylish gulp-plumber gulp-cache gulp-imagemin imagemin-pngquant run-sequence browser-sync pump gulp-zip gulp-notify gulp.spritesmith
+<br>Main Modules Used. You can install all with the following line: npm install --save-dev gulp-util  gulp-sass  gulp-minify-css gulp-rename  gulp-autoprefixer gulp-util gulp-minify-css gulp-rename del gulp-uglify gulp-concat jshint gulp-jshint gulp-wrapper gulp-sourcemaps jshint-stylish gulp-plumber gulp-cache gulp-imagemin imagemin-pngquant run-sequence browser-sync pump gulp-zip gulp-notify gulp.spritesmith
 <br> 
 <br>Uglify: - npm install --save-dev gulp-uglify
 <br>PUMP: - npm install pump
