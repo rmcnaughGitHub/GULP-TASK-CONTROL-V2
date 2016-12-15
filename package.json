@@ -46,6 +46,7 @@
     "jshint": "^2.9.4",
     "jshint-stylish": "^2.2.1",
     "merge-stream": "^1.0.1",
+    "pump": "^1.0.1",
     "run-sequence": "^1.2.2"
   },
   "dependencies": {
