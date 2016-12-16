@@ -71,7 +71,8 @@ var paths = {
 //HTML COPY - used if compying to another directory
 gulp.task('copy-html', function(){
 	gulp.src(paths.html.src)
-	.pipe(gulp.dest(paths.html.dist))
+	.pipe(gulp.dest(paths.html.dist));
+	console.log('Copy HTML');
 });
 
 //SASS
@@ -84,6 +85,7 @@ gulp.task('sass', function() {
         .pipe(autoprefixer("last 3 version","safari 5", "ie 8", "ie 9"))
 		.pipe(gulp.dest(paths.styles.main))//app folder
 		.pipe(browserSync.stream());
+	console.log('Watching Sass File');
 });
 
 gulp.task('sass-build', function() {  
@@ -93,6 +95,7 @@ gulp.task('sass-build', function() {
         .pipe(concat('style.css'))
 		.pipe(cleanCSS()) //*minify
 		.pipe(gulp.dest(paths.styles.dist));//dist folder
+	console.log('Sass File Built');
 });
 
 
@@ -105,6 +108,7 @@ gulp.task('sprite-watch', function(){
 		}))
 	spriteData.img.pipe(gulp.dest(paths.images.main));
 	spriteData.css.pipe(gulp.dest(paths.styles.main));
+	console.log('Watching SpriteSheet and SpriteSheet CSS');
 });
 
 gulp.task('sprite-build', function(){
@@ -119,6 +123,7 @@ gulp.task('sprite-build', function(){
 	spriteData.css.pipe(autoprefixer("last 3 version","safari 5", "ie 8", "ie 9"))
 		.pipe(cleanCSS())
 		.pipe(gulp.dest(paths.styles.dist));
+	console.log('Bulding SpriteSheet and SpriteSheet CSS');
 });
 
 
@@ -129,10 +134,10 @@ gulp.task('JS-watch', function(){
 		gulp.dest(paths.scripts.main),
 		browserSync.stream()
 	]);
+	console.log('Watching JS Files');
 });
 
 gulp.task('JS-build', function(){
-	console.log("Concating and moving all the JS files in styles folder");
 	pump([
 		gulp.src(paths.scripts.src),
 		//rename({suffix: '.min'}), //*rename
@@ -140,6 +145,7 @@ gulp.task('JS-build', function(){
 		uglify(), //*minify
 		gulp.dest(paths.scripts.dist)
 	]);
+	console.log('Concating and moving all the JS files in styles folder');
 })
 
 
@@ -174,6 +180,7 @@ gulp.task('imageMin', function () {
         	interlaced: true
         }))
   		.pipe(gulp.dest(paths.images.dist));
+  	console.log('Minifying Image');
 });
 
 
@@ -185,14 +192,14 @@ gulp.task('clean:dist', function() {
 
 //ZIP FILES - FOLDER
 gulp.task('zip-the-files', function() {
-	return gulp.src(paths.base.main + '/*')
+	console.log('Zipping Filename = ', zipName);
+	gulp.src(paths.base.main + '**/*.*')//('.dist/**')//(paths.base.main + '/*')
 		.pipe(zip(zipName + '.zip'))
 		.pipe(gulp.dest('./'))
 		.on('error', notify.onError({
 		        title: 'Zip File Failed', 
 		        message: 'One or more tests failed, see cli for details.'
 		}));
-	console.log('zip file ', zipName);
 });
 
 
