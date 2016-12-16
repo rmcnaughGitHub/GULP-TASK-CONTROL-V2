@@ -116,7 +116,9 @@ gulp.task('sprite-build', function(){
 			cssName:  'spriteSheet.css'
 		}));
 	spriteData.img.pipe(gulp.dest(paths.images.dist));
-	spriteData.css.pipe(gulp.dest(paths.styles.dist));
+	spriteData.css.pipe(autoprefixer("last 3 version","safari 5", "ie 8", "ie 9"))
+		.pipe(cleanCSS())
+		.pipe(gulp.dest(paths.styles.dist));
 });
 
 
@@ -183,7 +185,7 @@ gulp.task('clean:dist', function() {
 
 //ZIP FILES - FOLDER
 gulp.task('zip-the-files', function() {
-	return gulp.src('../dist')
+	return gulp.src(paths.base.main + '/*')
 		.pipe(zip(zipName + '.zip'))
 		.pipe(gulp.dest('./'))
 		.on('error', notify.onError({
