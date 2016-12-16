@@ -17,7 +17,7 @@ https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md
 
 
 
-<br>Main Modules Used. You can install all with the following line: npm install --save-dev gulp-util  gulp-sass  gulp-minify-css gulp-rename  gulp-autoprefixer gulp-util gulp-minify-css gulp-rename del gulp-uglify gulp-concat jshint gulp-jshint gulp-wrapper gulp-sourcemaps jshint-stylish gulp-plumber gulp-cache gulp-imagemin imagemin-pngquant run-sequence browser-sync pump gulp-zip gulp-notify gulp.spritesmith
+<br>Main Modules Used. You can install all with the following line: npm install --save-dev gulp-util  gulp-sass gulp-rename  gulp-autoprefixer gulp-util gulp-clean-css gulp-rename del gulp-uglify gulp-concat jshint gulp-jshint gulp-wrapper gulp-sourcemaps jshint-stylish gulp-plumber gulp-cache gulp-imagemin imagemin-pngquant run-sequence browser-sync pump gulp-zip gulp-notify gulp.spritesmith
 <br> 
 <br>Uglify: - npm install --save-dev gulp-uglify
 <br>PUMP: - npm install pump
@@ -34,8 +34,9 @@ https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md
 <br>Gulp Notify: npm install --save-dev gulp-notify
 <br>Sprite Management: npm install --save-dev gulp.spritesmith
 <br>Merge File: npm install --save-dev merge-stream
-<br>
-<br>****Note: In the gulfile.js gulp tasks in the "[]"" run first!!!! However they all run simultaneously!!!!****
+<br>Minify Css: npm install gulp-clean-css --save-dev
+<br> 
+<br>****Note: In the gulfile.js gulp tasks in the the "Array" run first!!!! However they all run simultaneously!!!!****
 <br> 'gulp' to run server and watch
 <br> 'gulp build' to build files in 'dist' folder
 
