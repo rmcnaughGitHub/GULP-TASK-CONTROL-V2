@@ -3,7 +3,7 @@
 var gulp = require('gulp'),
 	sass = require('gulp-sass'),//sass compiler
 	autoprefixer = require('gulp-autoprefixer'),//https://www.npmjs.org/package/gulp-autoprefixer
-	minifycss = require('gulp-minify-css'),//https://www.npmjs.org/package/gulp-minify-css
+	cleanCSS = require('gulp-clean-css'),//https://github.com/scniro/gulp-clean-css
 	rename = require('gulp-rename'),//https://www.npmjs.org/package/gulp-rename
 	browserSync = require('browser-sync').create(),
 	uglify = require('gulp-uglify'),//minify js
@@ -91,7 +91,7 @@ gulp.task('sass-build', function() {
         .pipe(sass({includePaths: ['scss'], style: 'expanded' }))
         .pipe(autoprefixer("last 3 version","safari 5", "ie 8", "ie 9"))
         .pipe(concat('style.css'))
-		.pipe(minifycss()) //*minify
+		.pipe(cleanCSS()) //*minify
 		.pipe(gulp.dest(paths.styles.dist));//dist folder
 });
 
@@ -102,7 +102,7 @@ gulp.task('sprite-watch', function(){
 		.pipe(spritesmith({
 			imgName: '../images/spriteSheet.png',
 			cssName:  'spriteSheet.css'
-		}));
+		}))
 	spriteData.img.pipe(gulp.dest(paths.images.main));
 	spriteData.css.pipe(gulp.dest(paths.styles.main));
 });
@@ -118,6 +118,7 @@ gulp.task('sprite-build', function(){
 	spriteData.img.pipe(gulp.dest(paths.images.dist));
 	spriteData.css.pipe(gulp.dest(paths.styles.dist));
 });
+
 
 //JAVASCRIPT WATCH {Compress}
 gulp.task('JS-watch', function(){
@@ -182,7 +183,7 @@ gulp.task('clean:dist', function() {
 
 //ZIP FILES - FOLDER
 gulp.task('zip-the-files', function() {
-	return gulp.src(paths.base.main + '/*')//(paths.base.dist  + '/*')
+	return gulp.src('../dist')
 		.pipe(zip(zipName + '.zip'))
 		.pipe(gulp.dest('./'))
 		.on('error', notify.onError({
@@ -199,17 +200,14 @@ gulp.task('watch', function() {
 	gulp.watch(paths.styles.src).on('change', browserSync.reload);//sass
 	gulp.watch(paths.scripts.src).on('change', browserSync.reload);//.js
 	gulp.watch(paths.base.html).on('change', browserSync.reload);//html
-	gulp.watch(paths.images.dist,['sprite-watch']);//sprite
+	gulp.watch(paths.images.sprites,['sprite-watch']);//sprite
 	//gulp.watch(paths.images.src,['imageMin']);//imageMin
 });
 
 
 //DEFAULT TASKS
-gulp.task('default',['sass','sprite-watch','JS-watch', 'browser-sync', 'watch']);
+gulp.task('default',['sass', 'sprite-watch', 'JS-watch', 'browser-sync', 'watch']);
 
 
 //BUILD TASK
-gulp.task('build', ['clean:dist','sass-build','JS-build','copy-html','sprite-build','imageMin', 'zip-the-files']);
-/*gulp.task('build', function(){
-	runSequence(['clean:dist'],'sass-build','JS-build', 'copy-html','imageMin', 'zip-the-files')
-});*/
+gulp.task('build', ['clean:dist', 'sass-build', 'JS-build', 'copy-html', 'sprite-build', 'imageMin', 'zip-the-files']);
