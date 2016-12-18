@@ -35,8 +35,10 @@ https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md
 <br>Sprite Management: npm install --save-dev gulp.spritesmith
 <br>Merge File: npm install --save-dev merge-stream
 <br>Minify Css: npm install gulp-clean-css --save-dev
+<br>
 <br>Inline Source for JS: npm install gulp-inline-source --save-dev 
 <br>*Note html file must have "inline" tag*: Example "< script src="../js/inlineScript.js" *inline*>< /script >"
+<br>
 <br> Replace String Names: npm install --save-dev gulp-replace
 <br>
 <br>****Note: In the gulfile.js gulp tasks in the the "Array" run first!!!! However they all run simultaneously!!!!****
