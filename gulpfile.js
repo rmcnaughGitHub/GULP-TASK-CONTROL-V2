@@ -23,10 +23,11 @@ var gulp = require('gulp'),
 	zip = require('gulp-zip'),
 	notify = require('gulp-notify'),//gulp plugin to send messages based on Vinyl Files or Errors to Mac OS X, Linux or Windows using the node-notifier module. Fallbacks to Growl or simply logging
 	spritesmith = require('gulp.spritesmith'),//sprite management - https://www.bignerdranch.com/blog/css-sprite-management-with-gulp/
-	//NAME ZIP FILE AFTER MAIN DIRECTORY
 	merge = require('merge-stream'),//Merge files
+	inlinesource = require('gulp-inline-source'),//Inline Source for JS 
+	replace = require('gulp-replace'),//replace string names
 
-
+	//NAME ZIP FILE AFTER MAIN DIRECTORY
 	dirParts = __dirname.split('/'),
 	zipName = dirParts[dirParts.length - 1];//Then within the "zip-the-files" task definition, replace the hardcoded zip name with: zipName + '.zip'
 
@@ -94,7 +95,6 @@ gulp.task('sass-build', function() {
         .pipe(autoprefixer("last 3 version","safari 5", "ie 8", "ie 9"))
         .pipe(concat('style.css'))
 		.pipe(cleanCSS()) //*minify
-		.pipe(gulp.dest(paths.styles.dist));//dist folder
 	console.log('Sass File Built');
 });
 
@@ -119,10 +119,9 @@ gulp.task('sprite-build', function(){
 			imgName: '../images/spriteSheet.png',
 			cssName:  'spriteSheet.css'
 		}));
-	spriteData.img.pipe(gulp.dest(paths.images.dist));
+	spriteData.img.pipe(gulp.dest(paths.base.dist));
 	spriteData.css.pipe(autoprefixer("last 3 version","safari 5", "ie 8", "ie 9"))
 		.pipe(cleanCSS())
-		.pipe(gulp.dest(paths.styles.dist));
 	console.log('Bulding SpriteSheet and SpriteSheet CSS');
 });
 
@@ -142,11 +141,10 @@ gulp.task('JS-build', function(){
 		gulp.src(paths.scripts.src),
 		//rename({suffix: '.min'}), //*rename
 		concat('script.js'),//*concat
-		uglify(), //*minify
-		gulp.dest(paths.scripts.dist)
+		uglify()//, //*minify
 	]);
-	console.log('Concating and moving all the JS files in styles folder');
-})
+	console.log('Concating and moving all the JS files in /js folder');
+});
 
 
 //BROWSER SYNC - LIVE RE-LOAD
@@ -179,7 +177,7 @@ gulp.task('imageMin', function () {
             use: [pngquant()], 
         	interlaced: true
         }))
-  		.pipe(gulp.dest(paths.images.dist));
+  		.pipe(gulp.dest(paths.base.dist));//(paths.images.dist));
   	console.log('Minifying Image');
 });
 
@@ -190,10 +188,29 @@ gulp.task('clean:dist', function() {
 })
 
 
+//INLINE CSS AND JAVASCRIPT
+gulp.task('inlinesource', function () {
+    return gulp.src(paths.html.src)
+        .pipe(inlinesource())
+        .pipe(gulp.dest(paths.base.dist));
+    console.log('Adding Javscript and CSS to Hmtl Inline');
+});
+
+
+//REPLACE 
+gulp.task( 'replace', [ 'inlinesource' ], function( done ) {
+    gulp.src( paths.base.dist + '/index.html' )
+        .pipe( replace( '../images/', 'images/') )
+        .pipe( replace( 'images/', './') )
+        .pipe( gulp.dest( paths.base.dist ) )
+        .on('end', function () { done(); });
+});
+
+
 //ZIP FILES - FOLDER
 gulp.task('zip-the-files', function() {
 	console.log('Zipping Filename = ', zipName);
-	gulp.src(paths.base.main + '**/*.*')//('.dist/**')//(paths.base.main + '/*')
+	gulp.src(paths.base.main + '**/*.*')
 		.pipe(zip(zipName + '.zip'))
 		.pipe(gulp.dest('./'))
 		.on('error', notify.onError({
@@ -219,4 +236,14 @@ gulp.task('default',['sass', 'sprite-watch', 'JS-watch', 'browser-sync', 'watch'
 
 
 //BUILD TASK
-gulp.task('build', ['clean:dist', 'sass-build', 'JS-build', 'copy-html', 'sprite-build', 'imageMin', 'zip-the-files']);
+gulp.task('build', ['clean:dist', 'sass-build', 'JS-build', 'copy-html', 'sprite-build', 'imageMin', 'replace'/*,'zip-the-files'*/], function(){
+	gulp.src(  paths.base.dist + '/*' )
+        .pipe(zip(zipName + '.zip'))
+		.pipe(gulp.dest('./'))
+		.on('error', notify.onError({
+	        title: 'Zip File Failed', 
+	        message: 'One or more tests failed, see cli for details.'
+	}));
+	console.log('Zipping Filename = ', zipName);
+});
+
