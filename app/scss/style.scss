@@ -1,24 +1,10 @@
-/*//// 
+/*///tells the browser to read the css file as UTF-8. 
+This is handy if you CSS contains unicode characters and not only ASCII.*/
+@charset "UTF-8";
 
-COMPASS SPRITE CONTROL
--Note- all sprites in spritesheet must be .pngs
--Note- @extend adds 'base' style to any other class or id
 
-////*/
-
-//@import "../images/spriteSheet/*.png";
-//$sprites: sprite-map("../images/spriteSheet/*.png");
-//@include all-spriteSheet-sprites;
-
-/*.img1 {
-	background: url($sprites, sprite-one);
-	@extend .imgControl;
-}
-
-.img2 {
-	background: url($sprites, sprite-two);
-	@extend .imgControl;
-}*/
+@import "../css/spriteSheet";
+/*//// method for importing .css file into .scss files  ////*/
 
 
 /*VARS*/
@@ -75,12 +61,15 @@ body, html {
 	//transform: translateY(-50%);
 }
 
-.imgControl {
-	position: absolute;
-	background-size: cover;
+.img1 {
+	@extend .icon-spongebob;
+	//background-repeat: no-repeat;
+	//background-size: cover;
+	height: 200px;
 	left: 50px;
-	height: 170px;
 	outline: 1px solid #f00;
-	width: 170px;
+	position: absolute;
 	top: 80px;
+	width: 200px;
+	z-index: 1;
 }

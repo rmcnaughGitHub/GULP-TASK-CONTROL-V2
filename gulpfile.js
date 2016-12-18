@@ -116,7 +116,7 @@ gulp.task('sprite-build', function(){
 		.pipe(spritesmith({
 			// this whole image path is used
 			//in css background declarations
-			imgName: '../images/spriteSheet.png',
+			imgName: 'spriteSheet.png',
 			cssName:  'spriteSheet.css'
 		}));
 	spriteData.img.pipe(gulp.dest(paths.base.dist));
@@ -177,14 +177,14 @@ gulp.task('imageMin', function () {
             use: [pngquant()], 
         	interlaced: true
         }))
-  		.pipe(gulp.dest(paths.base.dist));//(paths.images.dist));
+  		.pipe(gulp.dest(paths.base.dist));
   	console.log('Minifying Image');
 });
 
 
 //CLEAN DIST FOLDER
 gulp.task('clean:dist', function() {
-  return del.sync(paths.base.dist);
+  return del.sync([paths.base.dist + './*', paths.base.main + './*.zip']);
 })
 
 
@@ -210,7 +210,7 @@ gulp.task( 'replace', [ 'inlinesource' ], function( done ) {
 //ZIP FILES - FOLDER
 gulp.task('zip-the-files', function() {
 	console.log('Zipping Filename = ', zipName);
-	gulp.src(paths.base.main + '**/*.*')
+	gulp.src(paths.base.main + '*/')
 		.pipe(zip(zipName + '.zip'))
 		.pipe(gulp.dest('./'))
 		.on('error', notify.onError({
@@ -246,4 +246,3 @@ gulp.task('build', ['clean:dist', 'sass-build', 'JS-build', 'copy-html', 'sprite
 	}));
 	console.log('Zipping Filename = ', zipName);
 });
-

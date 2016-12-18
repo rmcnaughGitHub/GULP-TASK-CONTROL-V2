@@ -1,19 +1,42 @@
-/*//// 
+/*///tells the browser to read the css file as UTF-8. 
+This is handy if you CSS contains unicode characters and not only ASCII.*/
+/*
+Icon classes can be used entirely standalone. They are named after their original file names.
 
-COMPASS SPRITE CONTROL
--Note- all sprites in spritesheet must be .pngs
--Note- @extend adds 'base' style to any other class or id
+Example usage in HTML:
 
-////*/
-/*.img1 {
-	background: url($sprites, sprite-one);
-	@extend .imgControl;
+`display: block` sprite:
+<div class="icon-home"></div>
+
+To change `display` (e.g. `display: inline-block;`), we suggest using a common CSS class:
+
+// CSS
+.icon {
+  display: inline-block;
 }
 
-.img2 {
-	background: url($sprites, sprite-two);
-	@extend .imgControl;
-}*/
+// HTML
+<i class="icon icon-home"></i>
+*/
+.icon-spongebob, .img1 {
+  background-image: url(../images/spriteSheet.png);
+  background-position: 0px 0px;
+  width: 642px;
+  height: 612px; }
+
+.icon-sprite-one {
+  background-image: url(../images/spriteSheet.png);
+  background-position: -642px 0px;
+  width: 309px;
+  height: 416px; }
+
+.icon-sprite-two {
+  background-image: url(../images/spriteSheet.png);
+  background-position: 0px -612px;
+  width: 256px;
+  height: 256px; }
+
+/*//// method for importing .css file into .scss files  ////*/
 /*VARS*/
 body {
   font-family: Tahoma, Geneva, sans-serif;
@@ -53,11 +76,11 @@ body, html {
   top: 0;
   /*50%*/ }
 
-.imgControl {
-  position: absolute;
-  background-size: cover;
+.img1 {
+  height: 200px;
   left: 50px;
-  height: 170px;
   outline: 1px solid #f00;
-  width: 170px;
-  top: 80px; }
+  position: absolute;
+  top: 80px;
+  width: 200px;
+  z-index: 1; }
