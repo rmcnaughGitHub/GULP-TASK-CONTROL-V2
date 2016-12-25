@@ -39,7 +39,18 @@ https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md
 <br>Inline Source for JS: npm install gulp-inline-source --save-dev 
 <br>****Note html file must have "inline" tag****: Example "< script src="../js/inlineScript.js" ****inline****>< /script >"
 <br>
-<br> Replace String Names: npm install --save-dev gulp-replace
+<br>Replace String Names: npm install --save-dev gulp-replace
+<br>
+<br><u>GLOBBING</u>:
+<br>
+*.scss: The * pattern is a wildcard that matches any pattern in the current directory. In this case, we’re matching any files ending with .scss in the root folder (project).
+<br>
+**/*.scss: This is a more extreme version of the * pattern that matches any file ending with .scss in the root folder and any child directories.
+<br>
+!not-me.scss: The ! indicates that Gulp should exclude the pattern from its matches, which is useful if you had to exclude a file from a matched pattern. In this case, not-me.scss would be excluded from the match.
+<br>
+*.+(scss|sass): The plus + and parentheses () allows Gulp to match multiple patterns, with different patterns separated by the pipe | character. In this case, Gulp will match any file ending with .scss or .sass in the root folder.
+<br>
 <br>
 <br>****Note: In the gulfile.js gulp tasks in the the "Array" run first!!!! However they all run simultaneously!!!!****
 <br> 'gulp' to run server and watch

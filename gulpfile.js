@@ -64,7 +64,7 @@ var paths = {
 		src: 'app/images/*.{jpg,png,gif,jpeg}',
 		main: 'app/images',
 		dist: 'dist/images',
-		sprites: 'app/images/spriteSheet/*.png'
+		sprites: 'app/images/spriteSheet/*.{jpg,png,gif,jpeg}'
 	}
 };
 
@@ -179,12 +179,15 @@ gulp.task('imageMin', function () {
         }))
   		.pipe(gulp.dest(paths.base.dist));
   	console.log('Minifying Image');
+}).then(files => {
+    console.log(files);
+    //=> [{data: <Buffer 89 50 4e …>, path: 'build/images/foo.jpg'}, …] 
 });
 
 
 //CLEAN DIST FOLDER
 gulp.task('clean:dist', function() {
-  return del.sync([paths.base.dist + './*', paths.base.main + './*.zip']);
+  return del.sync([paths.base.dist, paths.base.main + '*.zip']);
 })
 
 
@@ -209,14 +212,14 @@ gulp.task( 'replace', [ 'inlinesource' ], function( done ) {
 
 //ZIP FILES - FOLDER
 gulp.task('zip-the-files', function() {
-	console.log('Zipping Filename = ', zipName);
-	gulp.src(paths.base.main + '*/')
-		.pipe(zip(zipName + '.zip'))
+	gulp.src(  paths.base.dist + './*' )
+        .pipe(zip(zipName + '.zip'))
 		.pipe(gulp.dest('./'))
 		.on('error', notify.onError({
-		        title: 'Zip File Failed', 
-		        message: 'One or more tests failed, see cli for details.'
-		}));
+	        title: 'Zip File Failed', 
+	        message: 'One or more tests failed, see cli for details.'
+	}));
+	console.log('Zipping Filename = ', zipName);
 });
 
 
@@ -227,7 +230,6 @@ gulp.task('watch', function() {
 	gulp.watch(paths.scripts.src).on('change', browserSync.reload);//.js
 	gulp.watch(paths.base.html).on('change', browserSync.reload);//html
 	gulp.watch(paths.images.sprites,['sprite-watch']);//sprite
-	//gulp.watch(paths.images.src,['imageMin']);//imageMin
 });
 
 
@@ -236,7 +238,7 @@ gulp.task('default',['sass', 'sprite-watch', 'JS-watch', 'browser-sync', 'watch'
 
 
 //BUILD TASK
-gulp.task('build', ['clean:dist', 'sass-build', 'JS-build', 'copy-html', 'sprite-build', 'imageMin', 'replace'/*,'zip-the-files'*/], function(){
+gulp.task('build',['clean:dist', 'sass-build', 'JS-build', 'copy-html', 'replace', 'sprite-build', 'imageMin'/*,'zip-the-files'*/], function(){
 	gulp.src(  paths.base.dist + '/*' )
         .pipe(zip(zipName + '.zip'))
 		.pipe(gulp.dest('./'))
