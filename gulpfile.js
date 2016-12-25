@@ -179,9 +179,6 @@ gulp.task('imageMin', function () {
         }))
   		.pipe(gulp.dest(paths.base.dist));
   	console.log('Minifying Image');
-}).then(files => {
-    console.log(files);
-    //=> [{data: <Buffer 89 50 4e …>, path: 'build/images/foo.jpg'}, …] 
 });
 
 
