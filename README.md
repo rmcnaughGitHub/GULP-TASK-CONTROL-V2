@@ -32,7 +32,10 @@ https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md
 <br>Gulp Zip: npm install --save-dev gulp-zip
 <br>Browser Synch:  npm install -g browser-sync
 <br>Gulp Notify: npm install --save-dev gulp-notify
+<br>
 <br>Sprite Management: npm install --save-dev gulp.spritesmith
+<br>**NOTE** adding jpgs to the spritesheet may increase the out-put size (when building) by 200% or more. It seem to be an error in the spritesheet build process.
+<br>
 <br>Merge File: npm install --save-dev merge-stream
 <br>Minify Css: npm install gulp-clean-css --save-dev
 <br>
